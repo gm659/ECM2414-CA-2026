@@ -15,25 +15,27 @@ public class Game{
         if (numberOfPlayers < 1){
             throw new IllegalArgumentException("Game has to have one or more characters");
         }
-        List<Card> pack = null;
+        List<Card> pack = new ArrayList<>();
         try{
-            List<Card> pack = getPack(numberOfPlayers, packtxt);
+            pack = getPack(numberOfPlayers, packtxt);
         } catch (IOException e){
             System.out.println("IOException: " + e);
         }
 
-        Deck deck = new Deck("things")
+
 
         this.pack = pack;
         this.numberOfPlayers = numberOfPlayers;
         this.packtxt = packtxt;
 
-
-
+        Deck deck = new Deck(1);
+        deck.addCard(getCardFromPack(pack));
+        System.out.println(deck.returnCards());
 
     }
 
     public static void main(String[] args) {
+        Game game = new Game(3, "pack.txt");
 
 
 
