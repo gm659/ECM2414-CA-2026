@@ -17,13 +17,15 @@ public class Player implements Runnable {
     private final PrintWriter writer;
     private final Deck drawDeck;
     private final Deck discardDeck;
+    private final AtomicInteger winner;
 
 
-    public Player(int id, int numberOfPlayers, List<Card> hand, Deck drawDeck, Deck discarDeck) throws FileNotFoundException{
+    public Player(int id, int numberOfPlayers, List<Card> hand, Deck drawDeck, Deck discarDeck, AtomicInteger winner) throws FileNotFoundException{
         this.id = id;
         this.hand = hand;
         this.numberOfPlayers = numberOfPlayers;
         this.drawDeck = drawDeck;
+        this.winner = winner;
         this.discardDeck = discarDeck;
         this.writer = new PrintWriter("player" + id + "_output.txt");
 
@@ -69,19 +71,18 @@ public class Player implements Runnable {
     public synchronized void turn(){
         writer.println("player"+id+"current hand: "+hand);
 
-        synchronized(drawDeck){
-            synchronized(discardDeck){
 
-                Card discardedCard = removeCard();
-                discardDeck.addCard(discardedCard); //removes a card from the hand and adds it to the discard deck
 
-                Card newCard = this.drawDeck.drawCard();
-                addCard(newCard);
+        Card discardedCard = removeCard();
+        discardDeck.addCard(discardedCard); //removes a card from the hand and adds it to the discard deck
 
-            }}
+        Card newCard = this.drawDeck.drawCard();
+        addCard(newCard);
+
+
 
         writer.println("player"+id+" drew "+ newCard.getValue());
-        writer.println("player"+id+" discarded "+ .getValue());
+        writer.println("player"+id+" discarded "+ discardedCard.getValue());
 
 
         }
@@ -104,16 +105,26 @@ public class Player implements Runnable {
 
         writer.println(message1);
 
-        boolean gameState = checkHand();
 
 
-        if (gameState == false){
-            turn();
-        } else{
-            System.out.println("Player" + id + "has won the game");
+        if (checkHand() == false){
+            while (!(winner.get() == id)){
+
+                if (checkHand() == true){
+                    crownWinner();
+                }
+                turn();
+
+
+        }} else{
+            System.out.println("game is over");
         }
 
 
+    }
+
+    public synchronized void crownWinner(){
+        winner.addAndGet(id);
     }
 
 
