@@ -71,20 +71,28 @@ public class Player implements Runnable {
     public synchronized void turn(){
         writer.println("player"+id+"current hand: "+hand);
 
+        synchronized(discardDeck){
+            synchronized(drawDeck){
+
+                Card discardedCard;
+                Card newCard = drawDeck.drawCard();
+
+                synchronized(this){
+
+                    addCard(newCard);
+                    discardedCard = removeCard(); //removes the card from the hand and stores it in the discardedCard variable
+                    discardDeck.addCard(discardedCard); // adds card to the discardDeck
+
+                }
+
+                writer.println("player"+id+" drew "+ newCard.getValue());
+                writer.println("player"+id+" discarded "+ discardedCard.getValue());
 
 
-        Card discardedCard = removeCard();
-        discardDeck.addCard(discardedCard); //removes a card from the hand and adds it to the discard deck
-
-        Card newCard = this.drawDeck.drawCard();
-        addCard(newCard);
 
 
-
-        writer.println("player"+id+" drew "+ newCard.getValue());
-        writer.println("player"+id+" discarded "+ discardedCard.getValue());
-
-
+            }
+        }
         }
 
 
@@ -105,20 +113,19 @@ public class Player implements Runnable {
 
         writer.println(message1);
 
+        if (checkHand()==true){
+            crownWinner();
+        }
 
 
-        if (checkHand() == false){
-            while (!(winner.get() == id)){
+
+
+            while ((winner.get() != id)){
 
                 if (checkHand() == true){
                     crownWinner();
                 }
-                turn();
-
-
-        }} else{
-            System.out.println("game is over");
-        }
+                turn();}
 
 
     }
