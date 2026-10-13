@@ -67,6 +67,8 @@ public class Game{
         return card;
     }
 
+
+
     public static List<Card> makeDeck(List<Card> pack, int n){
         List<Card> Deck = new ArrayList<>();
         for (int i = 0; i<n;i++){
@@ -75,7 +77,6 @@ public class Game{
         return Deck;
 
     }
-
 
 
 }
