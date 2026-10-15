@@ -71,8 +71,8 @@ public class Player implements Runnable {
     public synchronized void turn(){
         writer.println("player"+id+"current hand: "+hand);
 
-        synchronized(discardDeck){
-            synchronized(drawDeck){
+        synchronized(drawDeck){
+            synchronized(discardDeck){
 
                 Card discardedCard;
                 Card newCard = drawDeck.drawCard();
