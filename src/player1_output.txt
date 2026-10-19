@@ -1,15 +1,12 @@
 player 1 intial hand 1 1 7 2
-player 1current hand: [1, 1, 7, 2]
 player1 drew 5
+player1 discarded 2
+player1 current hand is [1, 1, 7, 5]
+player1 drew 1
 player1 discarded 7
-player1 current hand is [1, 1, 2, 5]
-player 1current hand: [1, 1, 2, 5]
+player1 current hand is [1, 1, 5, 1]
 player1 drew 1
 player1 discarded 5
-player1 current hand is [1, 1, 2, 1]
-player 1current hand: [1, 1, 2, 1]
-player1 drew 1
-player1 discarded 2
 player1 current hand is [1, 1, 1, 1]
 player1 wins
 player1 final hand: [1, 1, 1, 1]

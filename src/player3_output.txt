@@ -1,11 +1,12 @@
 player 3 intial hand 3 6 1 4
-player 3current hand: [3, 6, 1, 4]
 player3 drew 1
 player3 discarded 1
 player3 current hand is [3, 6, 4, 1]
-player 3current hand: [3, 6, 4, 1]
 player3 drew 1
-player3 discarded 1
-player3 current hand is [3, 6, 4, 1]
+player3 discarded 6
+player3 current hand is [3, 4, 1, 1]
+player3 drew 5
+player3 discarded 4
+player3 current hand is [3, 1, 1, 5]
 player 1 has won!
-player3 final hand: [3, 6, 4, 1]
+player3 final hand: [3, 1, 1, 5]

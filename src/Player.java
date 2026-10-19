@@ -83,7 +83,7 @@ public class Player implements Runnable {
         }
 
         // conditional statements needed to find the proper
-        writer.println("player "+id+"current hand: "+hand);
+
 
         synchronized(Deck1){
             synchronized(Deck2){
@@ -113,7 +113,7 @@ public class Player implements Runnable {
     public void run(){
         // game logic goes here
 
-        String message1 = String.format("player %d intial hand %d %d %d %d", id, hand.get(0).getValue(),
+        String message1 = String.format("player%d initial hand %d %d %d %d", id, hand.get(0).getValue(),
         hand.get(1).getValue(),           hand.get(2).getValue(),                hand.get(3).getValue());
         // orginal message to be put in the text file
 

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Scanner;
 
 public class Game{
 
@@ -19,6 +20,7 @@ public class Game{
         if (numberOfPlayers < 1){
             throw new IllegalArgumentException("Game has to have one or more characters");
         }
+
 
 
 
@@ -65,9 +67,36 @@ public class Game{
     }
 
     public static void main(String[] args) throws Exception {
-        new Game(3, "pack.txt").play();
-
-
+        Scanner scanner = new Scanner(System.in);
+        int numberOfPlayers = 0;
+        String pack = "pack.txt";
+        Game game;
+        while (true){
+            System.out.println("Enter in number of players");
+            String input = scanner.nextLine().trim();
+            try{
+                numberOfPlayers = Integer.parseInt(input);
+                if (numberOfPlayers < 1){
+                    System.out.print("Has to be more than one player!");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.print("Number Format Exception " + e);
+            }
+        }
+        while (true){
+            System.out.println("Enter in the pack location");
+            pack = scanner.nextLine().trim();
+            try{
+                game = new Game(numberOfPlayers, pack);
+                break;
+            } catch (IOException e) {
+                System.out.print("IO Exception " + e);
+            }
+        }
+        scanner.close();
+        game.play();
 
 
 
