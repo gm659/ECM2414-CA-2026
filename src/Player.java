@@ -69,36 +69,45 @@ public class Player implements Runnable {
     }
 
     public synchronized void turn(){
-        writer.println("player"+id+"current hand: "+hand);
+        Deck Deck1;
+        Deck Deck2;
+        if (drawDeck.getDeckNumber() > discardDeck.getDeckNumber()){
+            Deck1 = drawDeck;
+        } else {
+            Deck1 = discardDeck;
+        }
+        if (Deck1 == drawDeck){
+            Deck2 = discardDeck;
+        } else{
+            Deck2 = drawDeck;
+        }
 
-        synchronized(drawDeck){
-            synchronized(discardDeck){
+        // conditional statements needed to find the proper
+        writer.println("player "+id+"current hand: "+hand);
+
+        synchronized(Deck1){
+            synchronized(Deck2){
+                if (drawDeck.isEmpty()){
+                    return;
+                }
 
                 Card discardedCard;
                 Card newCard = drawDeck.drawCard();
 
-                synchronized(this){
 
-                    addCard(newCard);
-                    discardedCard = removeCard(); //removes the card from the hand and stores it in the discardedCard variable
-                    discardDeck.addCard(discardedCard); // adds card to the discardDeck
 
-                }
+                addCard(newCard);
+                discardedCard = removeCard(); //removes the card from the hand and stores it in the discardedCard variable
+                discardDeck.addCard(discardedCard); // adds card to the discardDeck
+
+
 
                 writer.println("player"+id+" drew "+ newCard.getValue());
                 writer.println("player"+id+" discarded "+ discardedCard.getValue());
-
-
-
-
+                writer.println("player"+id+" current hand is "+hand);
             }
         }
         }
-
-
-
-
-
 
     @Override
     public void run(){
@@ -108,30 +117,29 @@ public class Player implements Runnable {
         hand.get(1).getValue(),           hand.get(2).getValue(),                hand.get(3).getValue());
         // orginal message to be put in the text file
 
-
-
-
         writer.println(message1);
 
-        if (checkHand()==true){
-            crownWinner();
-        }
 
-
-
-
-            while ((winner.get() != id)){
+        while ((winner.get() == 0)){
 
                 if (checkHand() == true){
                     crownWinner();
+                    break;
                 }
-                turn();}
+                turn();
+                Thread.onSpinWait();}
 
-
+        if (winner.get() == id){
+            writer.println("player"+id+" wins");
+        } else {
+            writer.println("player "+winner.get()+" has won!");
+        }
+        writer.println("player"+id+" final hand: "+hand);
+        writer.close();
     }
 
     public synchronized void crownWinner(){
-        winner.addAndGet(id);
+        winner.compareAndSet(0,id); //checks if a player hasn't won then changes the value to the player's id
     }
 
 

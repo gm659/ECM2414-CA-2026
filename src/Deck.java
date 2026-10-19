@@ -26,6 +26,13 @@ public class Deck {
         return deckNumber;
     }
 
+    public boolean isEmpty(){
+        if (cards.size() > 0){
+            return false;
+        }
+        return true;
+    }
+
     public List<Card> returnCards(){
         return cards;
     }

@@ -15,36 +15,51 @@ public class Game{
     private final Deck[] decks;
     private final AtomicInteger winner;
 
-    public Game(int numberOfPlayers, String packtxt){
+    public Game(int numberOfPlayers, String packtxt) throws IOException{
         if (numberOfPlayers < 1){
             throw new IllegalArgumentException("Game has to have one or more characters");
         }
-        List<Card> pack = new ArrayList<>();
-        try{
-            pack = getPack(numberOfPlayers, packtxt);
-        } catch (IOException e){
-            System.out.println("IOException: " + e);
-        }
+
 
 
         this.winner = new AtomicInteger(0);
-        this.pack = pack;
+        this.pack = getPack(numberOfPlayers, packtxt);
         this.numberOfPlayers = numberOfPlayers;
         this.packtxt = packtxt;
 
         this.decks = new Deck[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++){
-            decks[i] = new Deck(i);
+            decks[i] = new Deck(i+1);
+
         }
+
+        //make hands for the players
+
+        //have to put the first set of lists inside of the list of list
+        List<List<Card>> hand = new ArrayList<>();
+        for (int i = 0; i < numberOfPlayers; i++){
+            hand.add(new ArrayList<>());
+        }
+        // adds cards into the lists
+        int index = 0;
+        for (int i = 0; i < 4; i++){
+            for (int p = 0; p < numberOfPlayers; p++){
+                hand.get(p).add(pack.get(index++)); // takes the card at the current potisition and puts in in the players hand
+            }
+        }
+
+        //put the rest of the cards into the decks
+        for (int i = 0; i < 4; i++){
+            for (int d = 0; d < numberOfPlayers; d++){
+                decks[d].addCard(pack.get(index++)); // adds a card into the deck from the pack
+            }
+        }
+
 
 
         this.players = new Player[numberOfPlayers];
         for (int i = 0; i<numberOfPlayers; i++){
-            try{
-            players[i] = new Player(i, numberOfPlayers, pack, decks[i], decks[(i+1) % numberOfPlayers], winner);}
-            catch (FileNotFoundException e){System.out.println("The writer in player class is broken most likely" + e);}
-        }
-
+           players[i] = new Player(i+1, numberOfPlayers, hand.get(i), decks[i], decks[(i+1) % numberOfPlayers], winner);}
 
 
     }
@@ -87,7 +102,7 @@ public class Game{
             }
             pack.add(new Card(value));
         }
-        if (pack.size() < n*8){
+        if (pack.size() != n*8){
             throw new IllegalArgumentException("Pack must have " + 8*n + " cards. Instead has "+pack.size());
         }
 
@@ -96,23 +111,5 @@ public class Game{
 
 
     }
-    // first the players, then the decks
-    public static Card getCardFromPack(List<Card> pack){
-        //cards are created by the order of the pack
-        Card card = pack.remove(0);
-        return card;
-    }
-
-
-
-    public static List<Card> makeDeck(List<Card> pack, int n){
-        List<Card> Deck = new ArrayList<>();
-        for (int i = 0; i<n;i++){
-        Deck.add(getCardFromPack(pack));
-        }
-        return Deck;
-
-    }
-
 
 }
