@@ -132,7 +132,7 @@ public class Player implements Runnable {
         if (winner.get() == id){
             writer.println("player"+id+" wins");
         } else {
-            writer.println("player "+winner.get()+" has won!");
+            writer.println("player"+winner.get()+" has won!");
         }
         writer.println("player"+id+" final hand: "+hand);
         writer.close();

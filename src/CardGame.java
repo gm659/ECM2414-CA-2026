@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Scanner;
 
-public class Game{
+public class CardGame{
 
     private final int numberOfPlayers;
     private final String packtxt;
@@ -16,7 +16,7 @@ public class Game{
     private final Deck[] decks;
     private final AtomicInteger winner;
 
-    public Game(int numberOfPlayers, String packtxt) throws IOException{
+    public CardGame(int numberOfPlayers, String packtxt) throws IOException{
         if (numberOfPlayers < 1){
             throw new IllegalArgumentException("Game has to have one or more characters");
         }
@@ -70,7 +70,7 @@ public class Game{
         Scanner scanner = new Scanner(System.in);
         int numberOfPlayers = 0;
         String pack = "pack.txt";
-        Game game;
+        CardGame game;
         while (true){
             System.out.println("Enter in number of players");
             String input = scanner.nextLine().trim();
@@ -89,7 +89,7 @@ public class Game{
             System.out.println("Enter in the pack location");
             pack = scanner.nextLine().trim();
             try{
-                game = new Game(numberOfPlayers, pack);
+                game = new CardGame(numberOfPlayers, pack);
                 break;
             } catch (IOException e) {
                 System.out.print("IO Exception " + e);

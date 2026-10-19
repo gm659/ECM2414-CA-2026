@@ -1,4 +1,4 @@
-player 1 intial hand 1 1 7 2
+player1 initial hand 1 1 7 2
 player1 drew 5
 player1 discarded 2
 player1 current hand is [1, 1, 7, 5]
