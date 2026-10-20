@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class CardGame{
 
     private final int numberOfPlayers;
-    private final String packtxt;
+
     private final List<Card> pack;
     private final Player[] players;
     private final Deck[] decks;
@@ -27,7 +27,7 @@ public class CardGame{
         this.winner = new AtomicInteger(0);
         this.pack = getPack(numberOfPlayers, packtxt);
         this.numberOfPlayers = numberOfPlayers;
-        this.packtxt = packtxt;
+
 
         this.decks = new Deck[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++){
