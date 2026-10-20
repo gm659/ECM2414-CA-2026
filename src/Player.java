@@ -36,7 +36,10 @@ public class Player implements Runnable {
 
     public synchronized void addCard(Card card){
         if (hand.size() > 4){
-            throw new IllegalArgumentException("Already 4 cards in the deck");
+            throw new IllegalArgumentException("Card cannot be added to the deck due to an Illegal Argument Excpetion");
+        }
+        if (card == null){
+            throw new IllegalArgumentException("Card cannot be added to the deck due to an Illegal Argument Excpetion");
         }
         hand.add(card);
     }

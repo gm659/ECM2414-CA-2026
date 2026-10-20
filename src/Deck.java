@@ -14,6 +14,9 @@ public class Deck {
 
     public synchronized void addCard(Card newCard){
         // could add an exception to check validity of card
+        if (newCard == null){
+            throw new IllegalArgumentException("Cannot add a null card");
+        }
         cards.add(newCard);
     }
 
@@ -26,7 +29,7 @@ public class Deck {
         return deckNumber;
     }
 
-    public boolean isEmpty(){
+    public synchronized boolean isEmpty(){
         if (cards.size() > 0){
             return false;
         }

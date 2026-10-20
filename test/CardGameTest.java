@@ -2,13 +2,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import static org.junit.rules.Assertions.*;
+import static org.junit.Assert.*;
+
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import Java.util.Random;
+import java.util.Random;
 
 public class CardGameTest {
 
@@ -23,19 +25,27 @@ public class CardGameTest {
             text.add(String.valueOf(random.nextInt(9)+1));
         }
 
-        Path file = tempDir.resolve("testingPack.txt");
+        Path file = tempFolder.getRoot().toPath().resolve("testingPack.txt");
         Files.write(file,text);
         return file.toString();
     }
 
-    private String createPrecisePack(Object...lines) throws IOExcpetion{
+    private String createPrecisePack(Object...lines) throws IOException{
         List<String> text = new ArrayList<>();
         for (Object line : lines){
             text.add(String.valueOf(line));
         }
-        Path file = tempFolder.getRoot().getPath().resolve("testingPack.txt");
+        Path file = tempFolder.getRoot().toPath().resolve("testingPack.txt");
         Files.write(file, text);
         return file.toString();
+    }
+
+    private List<Integer> values(List<Card> pack){
+        List<Integer> result = new ArrayList<>();
+        for (Card card : pack){
+            result.add(card.getValue());
+        }
+        return result;
     }
 
     @Test
@@ -63,14 +73,14 @@ public class CardGameTest {
     @Test
     public void negativeNumberChecker() throws IOException{
         //Checks for negative numbers
-        String file = CardGame.getPack(1,createPrecisePack( -1,2,3,4,5,6,7,8));
+        String file = createPrecisePack( -1,2,3,4,5,6,7,8);
         assertThrows(IllegalArgumentException.class, () -> CardGame.getPack(1,file));
     }
 
     @Test
     public void missingFileCheck(){
         String missingFile = "notARealFile.txt";
-        assertThrows(IO.exception.class, () -> CardGame.getPack(1,missingFile));
+        assertThrows(IOException.class, () -> CardGame.getPack(1,missingFile));
     }
 
 

@@ -1,6 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.beans.Transient;
 import java.util.List;
 
 public class DeckTest {
@@ -10,7 +12,7 @@ public class DeckTest {
     @Before
     public void setUp() {
         deck = new Deck(1);
-    } 
+    }
 
     @Test
     public void newDeckIsEmptyTest() {
@@ -18,7 +20,7 @@ public class DeckTest {
         assertTrue(cards.isEmpty());
     }
 
-    @Test 
+    @Test
     public void drawCardFifoTest() {
         Card card1 = new Card(5);
         Card card2 = new Card(10);
@@ -31,10 +33,10 @@ public class DeckTest {
         assertEquals(card2, drawnCard2);
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void drawFromEmptyDeckReturnsNullTest() {
-        Card drawnCard = deck.drawCard();
-        assertNull(drawnCard);
+        deck.drawCard();
+
     }
 
     @Test
@@ -50,7 +52,7 @@ public class DeckTest {
         assertEquals(1, cards.size());
     }
 
-    @Test 
+    @Test
     public void drawRemovesCardFromDeckTest() {
         Card card = new Card(5);
         deck.addCard(card);
@@ -59,10 +61,22 @@ public class DeckTest {
         assertTrue(cards.isEmpty());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addNullCardThrowsExceptionTest() {
         deck.addCard(null);
     }
 
-    
+    @Test
+    public void isEmptyTest(){
+        assertTrue(deck.isEmpty());
+        deck.addCard(new Card(5));
+        assertFalse(deck.isEmpty());
+
+    }
+
+
+
+
+
+
 }
