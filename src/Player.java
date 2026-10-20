@@ -56,7 +56,7 @@ public class Player implements Runnable {
         return hand.remove(discardedCard);
     }
 
-    public synchronized boolean checkHand(){
+    public synchronized boolean checkHand(){ //checks to see if the player has a winning hand
         int count = 0;
         for (int i = 1; i < 4; i++){
             if (hand.get(0).getValue() == hand.get(i).getValue()){
@@ -88,7 +88,7 @@ public class Player implements Runnable {
         // conditional statements needed to find the proper
 
 
-        synchronized(Deck1){
+        synchronized(Deck1){ //locks the higher deck first to avoid deadlock
             synchronized(Deck2){
                 if (drawDeck.isEmpty()){
                     return;
@@ -125,12 +125,12 @@ public class Player implements Runnable {
 
         while ((winner.get() == 0)){
 
-                if (checkHand() == true){
-                    crownWinner();
+                if (checkHand() == true){ //check if player has a winning hand
+                    crownWinner(); // crown a winner if player has a winning hand
                     break;
                 }
                 turn();
-                Thread.onSpinWait();}
+                Thread.onSpinWait();} // simplier than using wait()
 
         if (winner.get() == id){
             writer.println("player"+id+" wins");

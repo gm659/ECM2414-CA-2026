@@ -58,7 +58,7 @@ public class CardGame{
         }
 
 
-
+        //Adds players to the player List
         this.players = new Player[numberOfPlayers];
         for (int i = 0; i<numberOfPlayers; i++){
            players[i] = new Player(i+1, numberOfPlayers, hand.get(i), decks[i], decks[(i+1) % numberOfPlayers], winner);}
@@ -67,6 +67,7 @@ public class CardGame{
     }
 
     public static void main(String[] args) throws Exception {
+        // Scanner lets the user enter in the pack file location and the number of players they want to play
         Scanner scanner = new Scanner(System.in);
         int numberOfPlayers = 0;
         String pack = "pack.txt";

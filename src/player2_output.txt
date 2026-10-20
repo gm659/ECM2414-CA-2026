@@ -1,6 +1,6 @@
 player2 initial hand 2 5 1 3
 player2 drew 1
-player2 discarded 5
-player2 current hand is [2, 1, 3, 1]
+player2 discarded 1
+player2 current hand is [2, 5, 3, 1]
 player1 has won!
-player2 final hand: [2, 1, 3, 1]
+player2 final hand: [2, 5, 3, 1]
